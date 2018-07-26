@@ -1,5 +1,9 @@
 package com.company.maker;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class CoffeMaker {
 
 
@@ -90,7 +94,7 @@ public class CoffeMaker {
                 builder.append("   `~'");
                 break;
         }
-        if(!builder.equals("")) {
+        if (!builder.equals("")) {
             System.out.println(builder.toString());
             useCount++;
             sugarAmount = Math.max(sugarAmount, 0);
@@ -143,6 +147,43 @@ public class CoffeMaker {
         System.out.println("Usages left:" + (MAX_USES - this.useCount));
         System.out.println("is machine ready:" + isReady());
         this.showProducts();
+    }
+
+    public void saveStatus() {
+        StringBuilder builder = new StringBuilder("");
+        builder.append("=========Maker status============\n");
+        builder.append("Usages left:");
+        builder.append(MAX_USES - this.useCount);
+        builder.append("\n");
+        builder.append("is machine ready:");
+        builder.append(isReady());
+        builder.append("\n");
+        builder.append("=========Product status=========\n");
+        builder.append("Sugar amount left:");
+        builder.append(sugarAmount);
+        builder.append("\n");
+        builder.append("Water amount left:");
+        builder.append(waterAmount);
+        builder.append("\n");
+        builder.append("Beans amount left:");
+        builder.append(beansAmount);
+
+        FileWriter writer=null;
+        try {
+            writer = new FileWriter("log.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.write(builder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

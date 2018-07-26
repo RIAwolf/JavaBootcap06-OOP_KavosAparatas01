@@ -7,14 +7,8 @@ import java.util.Scanner;
 public class Main {
 
     /*
-        Papildyti kavos aparata šiuo funkcionalumu:
-        - vartojas pats įveda kavos pavadinimą
-        - kai tikrinama ar aparatas pasiruošęs,
-            pranešti jei kažko trūksta ir ar reikia valyti
-            įskaitant ir prieš gaminant kavą
-        - visur naudoti string builder
-        - prideti "ASCII art" kavos puodeliams, naudoti string builder
-        - pildant aparatą iš vartotojo pasiimti kiekius kiek papildys
+        Sukurti meniu punkta kuris leistu aparato busena issaugoti tekstiniame faile
+        panaudoti git branch ir github pull request
      */
 
     public static void main(String[] args) {
@@ -28,6 +22,7 @@ public class Main {
         System.out.println("2 - rodyti aparato busena");
         System.out.println("3 - plauti aparata");
         System.out.println("4 - pildyti produktus");
+        System.out.println("5 - saugoti status i faila");
     }
 
     private void dirbam() {
@@ -63,7 +58,9 @@ public class Main {
                     float beans = sc.nextFloat();
                     aparatas.fillProducts(water,sugar,beans);
                     break;
-
+                case 5:
+                    aparatas.saveStatus();
+                    break;
             }
 
         } while (arTesti);
