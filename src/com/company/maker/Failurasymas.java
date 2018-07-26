@@ -7,7 +7,7 @@ public class Failurasymas {
 
     public static void main (String[] args){
         Failurasymas obj = new Failurasymas();
-        obj.dirbam();;
+        obj.dirbam();
     }
 
     public void dirbam(){
