@@ -33,6 +33,7 @@ public class CoffeMaker {
 
     public KavosPuodelis makeCoffee(KavosPuodelis puodelis) {
         // water = water - 0.3f
+
         this.products.setWater(this.products.getWater() - puodelis.getProduktai().getWater());
         this.products.setSugar(this.products.getSugar() - puodelis.getProduktai().getSugar());
         this.products.setBeans(this.products.getBeans() - puodelis.getProduktai().getBeans());
@@ -47,8 +48,8 @@ public class CoffeMaker {
         KavosPuodelis puodelis = null;
         switch (coffeType) {
             case "black":
-                puodelis = makeCoffee(new JuodosPuodelis());
-
+                puodelis =new JuodosPuodelis();
+                puodelis.gaminkKava(this.products);
                 break;
             case "latte":
                 puodelis = makeCoffee(new LattePuodelis());

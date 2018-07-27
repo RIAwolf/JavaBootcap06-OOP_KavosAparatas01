@@ -1,8 +1,15 @@
 package com.company.puodeliai;
 
+import com.company.recepies.Receptai;
+
 public class JuodosPuodelis extends KavosPuodelis {
-    public JuodosPuodelis(){
-        super(new Produktai(0.25f,10,20),"Black",0.3f);
+    public JuodosPuodelis() {
+
+        super(
+                Receptai.getInstance().gaukRecepta("Black"),
+                "Black",
+                0.3f
+        );
     }
 
     @Override

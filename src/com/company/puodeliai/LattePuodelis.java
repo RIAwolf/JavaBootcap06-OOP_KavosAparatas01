@@ -1,5 +1,7 @@
 package com.company.puodeliai;
 
+import com.company.recepies.Receptai;
+
 public class LattePuodelis extends KavosPuodelis {
 
     @Override
@@ -24,6 +26,6 @@ public class LattePuodelis extends KavosPuodelis {
     }
 
     public LattePuodelis(){
-        super(new Produktai(0.33f,20,40),"Latte",0.35f);
+        super(Receptai.getInstance().gaukRecepta("Latte"),"Latte",0.35f);
     }
 }

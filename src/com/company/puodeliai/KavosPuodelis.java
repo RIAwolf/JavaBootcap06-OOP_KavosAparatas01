@@ -27,4 +27,8 @@ public class KavosPuodelis extends Puodelis{
     public Produktai getProduktai() {
         return produktai;
     }
+
+    public void gaminkKava(Produktai aparatoAtsargos){
+        aparatoAtsargos.setWater(aparatoAtsargos.getWater()- this.produktai.getWater());
+    }
 }
