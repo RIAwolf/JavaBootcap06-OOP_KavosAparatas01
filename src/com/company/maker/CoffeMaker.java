@@ -1,5 +1,7 @@
 package com.company.maker;
 
+import com.company.puodeliai.*;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,98 +10,63 @@ public class CoffeMaker {
 
 
     public static final int MAX_USES = 5;
-    private float sugarAmount;
-    private float waterAmount;
-    private float beansAmount;
+    private Produktai products;
     private int useCount;
 
 
     public CoffeMaker() {
+        products = new Produktai();
     }
 
     public CoffeMaker(float water, float sugar, float beans) {
-        waterAmount = water;
-        sugarAmount = sugar;
-        beansAmount = beans;
+        products = new Produktai(water, sugar, beans);
     }
 
 
     public void fillProducts(float water, float sugar, float beans) {
-        waterAmount += water;
-        sugarAmount += sugar;
-        beansAmount += beans;
+
+        // water = water + 10
+        this.products.setWater(this.products.getWater() + water);
+        this.products.setSugar(this.products.getSugar() + sugar);
+        this.products.setBeans(this.products.getBeans() + beans);
+    }
+
+    public KavosPuodelis makeCoffee(KavosPuodelis puodelis) {
+        // water = water - 0.3f
+        this.products.setWater(this.products.getWater() - puodelis.getProduktai().getWater());
+        this.products.setSugar(this.products.getSugar() - puodelis.getProduktai().getSugar());
+        this.products.setBeans(this.products.getBeans() - puodelis.getProduktai().getBeans());
+        puodelis.setReady(true);
+        return puodelis;
     }
 
 
-    public void makeCoffe(String coffeType) {
+    public void proccessChoice(String coffeType) {
 
-        StringBuilder builder = new StringBuilder("");
+
+        KavosPuodelis puodelis = null;
         switch (coffeType) {
             case "black":
-                sugarAmount -= 10;
-                beansAmount -= 20;
-                waterAmount -= 0.25f;
-                builder.append("                        (\n");
-                builder.append("                          )     (\n");
-                builder.append("                   ___...(-------)-....___\n");
-                builder.append("               .-\"\"       )    (          \"\"-.\n");
-                builder.append("         .-'``'|-._             )         _.-|\n");
-                builder.append("        /  .--.|   `\"\"---...........---\"\"`   |\n");
-                builder.append("       /  /    |                             |\n");
-                builder.append("       |  |    |                             |\n");
-                builder.append("        \\  \\   |                             |\n");
-                builder.append("         `\\ `\\ |                             |\n");
-                builder.append("           `\\ `|                             |\n");
-                builder.append("           _/ /\\                             /\n");
-                builder.append("          (__/  \\                           /\n");
-                builder.append("       _..---\"\"` \\                         /`\"\"---.._\n");
-                builder.append("    .-'           \\                       /          '-.\n");
-                builder.append("   :               `-.__             __.-'              :\n");
-                builder.append("   :                  ) \"\"---...---\"\" (                 :\n");
-                builder.append("    '._               `\"--...___...--\"`              _.'\n");
-                builder.append("      \\\"\"--..__                              __..--\"\"/\n");
-                builder.append("       '._     \"\"\"----.....______.....----\"\"\"     _.'\n");
-                builder.append("          `\"\"--..,,_____            _____,,..--\"\"`\n");
-                builder.append("                        `\"\"\"----\"\"\"`");
+                puodelis = makeCoffee(new JuodosPuodelis());
 
                 break;
             case "latte":
-                sugarAmount -= 20;
-                beansAmount -= 40;
-                waterAmount -= 0.33f;
+                puodelis = makeCoffee(new LattePuodelis());
 
-                builder.append("\n");
-                builder.append("         {\n");
-                builder.append("      {   }\n");
-                builder.append("       }_{ __{\n");
-                builder.append("    .-{   }   }-.\n");
-                builder.append("   (   }     {   )\n");
-                builder.append("   |`-.._____..-'|\n");
-                builder.append("   |             ;--.\n");
-                builder.append("   |            (__  \\\n");
-                builder.append("   |             | )  )\n");
-                builder.append("   |             |/  /\n");
-                builder.append("   |             /  / \n");
-                builder.append("   |            (  /\n");
-                builder.append("   \\             y'\n");
-                builder.append("    `-.._____..-'");
+
                 break;
             case "espresso":
-                sugarAmount -= 10;
-                beansAmount -= 40;
-                waterAmount -= 0.1f;
-                builder.append("  .-=-.\n");
-                builder.append(" ,|`~'|\n");
-                builder.append(" `|   | \n");
-                builder.append("   `~'");
+                puodelis = makeCoffee(new EspressoPuodelis());
+
                 break;
         }
-        if (!builder.equals("")) {
-            System.out.println(builder.toString());
+        if (puodelis != null) {
+            System.out.println(puodelis);
             useCount++;
-            sugarAmount = Math.max(sugarAmount, 0);
-            waterAmount = Math.max(waterAmount, 0);
-            beansAmount = Math.max(beansAmount, 0);
+            this.products.setWater(Math.max(this.products.getWater(), 0));
+            this.products.setSugar(Math.max(this.products.getSugar(), 0));
+            this.products.setBeans(Math.max(this.products.getBeans(), 0));
+
         }
     }
 
@@ -116,15 +83,15 @@ public class CoffeMaker {
             result = false;
             System.out.println("Reikia plauti");
         }
-        if (waterAmount <= 0) {
+        if (this.products.getWater() <= 0) {
             result = false;
             System.out.println("Truksta vandens");
         }
-        if (sugarAmount <= 0) {
+        if (this.products.getSugar() <= 0) {
             result = false;
             System.out.println("Truksta cukraus");
         }
-        if (beansAmount <= 0) {
+        if (this.products.getBeans() <= 0) {
             result = false;
             System.out.println("Truksta pupeliu");
         }
@@ -135,9 +102,9 @@ public class CoffeMaker {
 
     public void showProducts() {
         System.out.println("=========Product status=========");
-        System.out.println("Sugar amount left:" + sugarAmount);
-        System.out.println("Water amount left:" + waterAmount);
-        System.out.println("Beans amount left:" + beansAmount);
+        System.out.println("Sugar amount left:" + this.products.getSugar());
+        System.out.println("Water amount left:" + this.products.getWater());
+        System.out.println("Beans amount left:" + this.products.getBeans());
 
     }
 
@@ -160,15 +127,15 @@ public class CoffeMaker {
         builder.append("\n");
         builder.append("=========Product status=========\n");
         builder.append("Sugar amount left:");
-        builder.append(sugarAmount);
+        builder.append(this.products.getSugar());
         builder.append("\n");
         builder.append("Water amount left:");
-        builder.append(waterAmount);
+        builder.append(this.products.getWater());
         builder.append("\n");
         builder.append("Beans amount left:");
-        builder.append(beansAmount);
+        builder.append(this.products.getBeans());
 
-        FileWriter writer=null;
+        FileWriter writer = null;
         try {
             writer = new FileWriter("log.txt");
         } catch (IOException e) {
@@ -185,36 +152,5 @@ public class CoffeMaker {
             e.printStackTrace();
         }
     }
-
-
-    public float getWater() {
-        return this.waterAmount;
-    }
-
-
-    public void setWater(float value) {
-        this.waterAmount = value;
-    }
-
-
-    public float getBeans() {
-        return this.beansAmount;
-    }
-
-
-    public void setBeans(float value) {
-        this.beansAmount = value;
-    }
-
-
-    public float getSugar() {
-        return this.sugarAmount;
-    }
-
-
-    public void setSugar(float value) {
-        this.sugarAmount = value;
-    }
-
 
 }

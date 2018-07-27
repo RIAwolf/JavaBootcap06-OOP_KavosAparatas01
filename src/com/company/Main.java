@@ -40,7 +40,7 @@ public class Main {
                     if(aparatas.isReady()) {
                         System.out.println("Iveskite kavos pavadinima: black, latte arba espresso");
                         String name = sc.next();
-                        aparatas.makeCoffe(name.toLowerCase());
+                        aparatas.proccessChoice(name.toLowerCase());
                     }
                     break;
                 case 2:
