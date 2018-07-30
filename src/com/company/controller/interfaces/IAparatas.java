@@ -1,4 +1,4 @@
-package com.company.interfaces;
+package com.company.controller.interfaces;
 
 public interface IAparatas {
     void fillProducts(float water, float sugar, float beans);

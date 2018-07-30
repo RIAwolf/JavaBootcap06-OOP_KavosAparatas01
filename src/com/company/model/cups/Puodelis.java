@@ -1,6 +1,6 @@
-package com.company.puodeliai;
+package com.company.model.cups;
 
-import com.company.interfaces.IPuodelis;
+import com.company.model.interfaces.IPuodelis;
 
 public class Puodelis implements IPuodelis {
     private float maxVolume;

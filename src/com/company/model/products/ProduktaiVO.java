@@ -1,12 +1,12 @@
-package com.company.puodeliai;
+package com.company.model.products;
 
-public class Produktai {
+public class ProduktaiVO {
     private float water;
     private float sugar;
     private float beans;
 
-    public Produktai(){}
-    public Produktai(float water, float sugar, float beans){
+    public ProduktaiVO(){}
+    public ProduktaiVO(float water, float sugar, float beans){
         this.water = water;
         this.beans = beans;
         this.sugar = sugar;
@@ -34,5 +34,10 @@ public class Produktai {
 
     public void setWater(float water) {
         this.water = water;
+    }
+
+    @Override
+    public String toString() {
+        return "Water: "+water+ " Sugar: "+sugar+" Beans: "+beans;
     }
 }

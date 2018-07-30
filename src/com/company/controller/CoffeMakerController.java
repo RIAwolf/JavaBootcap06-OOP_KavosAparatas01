@@ -1,17 +1,22 @@
-package com.company.maker;
+package com.company.controller;
 
-import com.company.interfaces.IAparatas;
-import com.company.interfaces.IReceptai;
-import com.company.puodeliai.*;
-import com.company.recepies.ReceptaiIsFailo;
-import com.company.recepies.ReceptaiIsInterneto;
-import com.company.recepies.ReceptaiIsVartotojo;
+import com.company.controller.interfaces.IAparatas;
+import com.company.model.cups.EspressoPuodelis;
+import com.company.model.cups.JuodosPuodelis;
+import com.company.model.cups.KavosPuodelis;
+import com.company.model.cups.LattePuodelis;
+import com.company.model.interfaces.IReceptai;
+import com.company.model.products.ProduktaiVO;
+import com.company.model.recepies.ReceptaiIsFailo;
+import com.company.model.recepies.ReceptaiIsInterneto;
+import com.company.model.recepies.ReceptaiIsVartotojo;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
-public class CoffeMaker implements IAparatas {
+public class CoffeMakerController implements IAparatas {
 
     private static IReceptai receptai;
     public static  IReceptai getReceptai(){
@@ -19,16 +24,32 @@ public class CoffeMaker implements IAparatas {
     }
 
     public static final int MAX_USES = 5;
-    private Produktai products;
+
+    public ProduktaiVO getProducts() {
+        return products;
+    }
+
+    public void setProducts(ProduktaiVO products) {
+        this.products = products;
+    }
+
+    private ProduktaiVO products;
+
+    private HashMap<String,Class> klasiuSarasas;
     private int useCount;
 
 
-    public CoffeMaker() {
-        products = new Produktai();
+    public CoffeMakerController() {
+        klasiuSarasas = new HashMap<>();
+
+        klasiuSarasas.put("black",JuodosPuodelis.class);
+        klasiuSarasas.put("latte",LattePuodelis.class);
+        klasiuSarasas.put("espresso",EspressoPuodelis.class);
+        products = new ProduktaiVO();
     }
 
-    public CoffeMaker(float water, float sugar, float beans) {
-        products = new Produktai(water, sugar, beans);
+    public CoffeMakerController(float water, float sugar, float beans) {
+        products = new ProduktaiVO(water, sugar, beans);
     }
 
 
@@ -43,9 +64,9 @@ public class CoffeMaker implements IAparatas {
     public KavosPuodelis makeCoffee(KavosPuodelis puodelis) {
         // water = water - 0.3f
 
-        this.products.setWater(this.products.getWater() - puodelis.getProduktai().getWater());
-        this.products.setSugar(this.products.getSugar() - puodelis.getProduktai().getSugar());
-        this.products.setBeans(this.products.getBeans() - puodelis.getProduktai().getBeans());
+        this.products.setWater(this.products.getWater() - puodelis.getProduktaiVO().getWater());
+        this.products.setSugar(this.products.getSugar() - puodelis.getProduktaiVO().getSugar());
+        this.products.setBeans(this.products.getBeans() - puodelis.getProduktaiVO().getBeans());
         puodelis.setReady(true);
         return puodelis;
     }
@@ -55,22 +76,15 @@ public class CoffeMaker implements IAparatas {
 
 
         KavosPuodelis puodelis = null;
-        switch (coffeType) {
-            case "black":
-                puodelis =new JuodosPuodelis();
-                puodelis.gaminkKava(this.products);
-                break;
-            case "latte":
-                puodelis = makeCoffee(new LattePuodelis());
+        if(!klasiuSarasas.containsKey(coffeType.toLowerCase())){
+            System.out.println("Tokios kavos nera");
+            return;
+        }
+        try {
+            puodelis = (KavosPuodelis) klasiuSarasas.get(coffeType.toLowerCase()).newInstance();
 
-
-                break;
-            case "espresso":
-                puodelis = makeCoffee(new EspressoPuodelis());
-
-                break;
-
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         if (puodelis != null) {
             System.out.println(puodelis);
@@ -98,13 +112,13 @@ public class CoffeMaker implements IAparatas {
         int pasirinkimas = sc.nextInt();
         switch (pasirinkimas){
             case 1:
-                CoffeMaker.receptai = new ReceptaiIsVartotojo();
+                CoffeMakerController.receptai = new ReceptaiIsVartotojo();
                 break;
             case 2:
-                CoffeMaker.receptai = new ReceptaiIsFailo("receptai.txt");
+                CoffeMakerController.receptai = new ReceptaiIsFailo("receptai.txt");
                 break;
             case 3:
-                CoffeMaker.receptai= new ReceptaiIsInterneto("http://www.riawolf.com/dev/receptai.txt");
+                CoffeMakerController.receptai= new ReceptaiIsInterneto("http://www.riawolf.com/dev/receptai.txt");
                 break;
         }
     }

@@ -1,26 +1,24 @@
-package com.company.recepies;
+package com.company.model.recepies;
 
-import com.company.interfaces.IReceptai;
-import com.company.puodeliai.Produktai;
+import com.company.model.interfaces.IReceptai;
+import com.company.model.products.ProduktaiVO;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class ReceptaiIsFailo implements IReceptai{
-    private HashMap<String, Produktai> receptuZodynas;
+    private HashMap<String, ProduktaiVO> receptuZodynas;
 
     @Override
-    public Produktai gaukRecepta(String raktas) {
+    public ProduktaiVO gaukRecepta(String raktas) {
         return receptuZodynas.get(raktas);
     }
 
     public ReceptaiIsFailo(String path){
-        receptuZodynas = new HashMap<String, Produktai>();
+        receptuZodynas = new HashMap<String, ProduktaiVO>();
         FileReader reader = null;
         try {
             reader = new FileReader(path);
@@ -34,7 +32,7 @@ public class ReceptaiIsFailo implements IReceptai{
             float sugar = sc.nextFloat();
             float beans = sc.nextFloat();
             String name = sc.next();
-            Produktai pr = new Produktai(water,sugar,beans);
+            ProduktaiVO pr = new ProduktaiVO(water,sugar,beans);
             receptuZodynas.put(name,pr);
         }
 
