@@ -1,13 +1,13 @@
-package com.company.recepies;
+package com.company.model.recepies;
 
-import com.company.interfaces.IReceptai;
-import com.company.puodeliai.Produktai;
+import com.company.model.interfaces.IReceptai;
+import com.company.model.products.ProduktaiVO;
 
 import java.util.Scanner;
 
 public class ReceptaiIsVartotojo implements IReceptai{
     @Override
-    public Produktai gaukRecepta(String raktas) {
+    public ProduktaiVO gaukRecepta(String raktas) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Iveskite kiek sunaudos produktu gaminant "+raktas);
         System.out.println("Iveksite cukraus kieki");
@@ -16,7 +16,7 @@ public class ReceptaiIsVartotojo implements IReceptai{
         float water = sc.nextFloat();
         System.out.println("Iveskite pupeliu kieki");
         float beans = sc.nextFloat();
-        return  new Produktai(sugar,water,beans);
+        return  new ProduktaiVO(sugar,water,beans);
 
     }
 }

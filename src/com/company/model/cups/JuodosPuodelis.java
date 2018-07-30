@@ -1,13 +1,12 @@
-package com.company.puodeliai;
+package com.company.model.cups;
 
-import com.company.maker.CoffeMaker;
-import com.company.recepies.ReceptaiIsInterneto;
+import com.company.controller.CoffeMakerController;
 
 public class JuodosPuodelis extends KavosPuodelis {
     public JuodosPuodelis() {
 
         super(
-                CoffeMaker.getReceptai().gaukRecepta("Black"),
+                CoffeMakerController.getReceptai().gaukRecepta("Black"),
                 "Black",
                 0.3f
         );

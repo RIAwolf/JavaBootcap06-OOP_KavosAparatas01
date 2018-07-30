@@ -1,7 +1,6 @@
-package com.company.puodeliai;
+package com.company.model.cups;
 
-import com.company.maker.CoffeMaker;
-import com.company.recepies.ReceptaiIsInterneto;
+import com.company.controller.CoffeMakerController;
 
 public class EspressoPuodelis extends KavosPuodelis {
     @Override
@@ -16,6 +15,6 @@ public class EspressoPuodelis extends KavosPuodelis {
 
     public EspressoPuodelis(){
 
-        super(CoffeMaker.getReceptai().gaukRecepta("Espresso"),"Espresso",0.15f);
+        super(CoffeMakerController.getReceptai().gaukRecepta("Espresso"),"Espresso",0.15f);
     }
 }
