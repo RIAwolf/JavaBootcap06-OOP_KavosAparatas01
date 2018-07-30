@@ -1,6 +1,8 @@
 package com.company.puodeliai;
 
-public class Puodelis {
+import com.company.interfaces.IPuodelis;
+
+public class Puodelis implements IPuodelis {
     private float maxVolume;
 
     public Puodelis(float volume){

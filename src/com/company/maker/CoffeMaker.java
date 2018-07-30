@@ -1,13 +1,22 @@
 package com.company.maker;
 
+import com.company.interfaces.IAparatas;
+import com.company.interfaces.IReceptai;
 import com.company.puodeliai.*;
+import com.company.recepies.ReceptaiIsFailo;
+import com.company.recepies.ReceptaiIsInterneto;
+import com.company.recepies.ReceptaiIsVartotojo;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
-public class CoffeMaker {
+public class CoffeMaker implements IAparatas {
 
+    private static IReceptai receptai;
+    public static  IReceptai getReceptai(){
+        return  receptai;
+    }
 
     public static final int MAX_USES = 5;
     private Produktai products;
@@ -60,6 +69,8 @@ public class CoffeMaker {
                 puodelis = makeCoffee(new EspressoPuodelis());
 
                 break;
+
+
         }
         if (puodelis != null) {
             System.out.println(puodelis);
@@ -74,6 +85,28 @@ public class CoffeMaker {
 
     public void washMaker() {
         this.useCount = 0;
+    }
+
+    @Override
+    public void selectDataSource() {
+        System.out.println("Pasirinkite duomenu saltini");
+        System.out.println("1 -  is vartotojo ivedimo");
+        System.out.println("2 -  is lokalaus failo");
+        System.out.println("3 -  is interneto");
+
+        Scanner sc = new Scanner(System.in);
+        int pasirinkimas = sc.nextInt();
+        switch (pasirinkimas){
+            case 1:
+                CoffeMaker.receptai = new ReceptaiIsVartotojo();
+                break;
+            case 2:
+                CoffeMaker.receptai = new ReceptaiIsFailo("receptai.txt");
+                break;
+            case 3:
+                CoffeMaker.receptai= new ReceptaiIsInterneto("http://www.riawolf.com/dev/receptai.txt");
+                break;
+        }
     }
 
 

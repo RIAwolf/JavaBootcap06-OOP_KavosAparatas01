@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.interfaces.IAparatas;
 import com.company.maker.CoffeMaker;
 
 import java.util.Scanner;
@@ -23,10 +24,11 @@ public class Main {
         System.out.println("3 - plauti aparata");
         System.out.println("4 - pildyti produktus");
         System.out.println("5 - saugoti status i faila");
+        System.out.println("6 - pasirinkti receptu saltini");
     }
 
     private void dirbam() {
-        CoffeMaker aparatas = new CoffeMaker();
+        IAparatas aparatas = new CoffeMaker();
         Scanner sc = new Scanner(System.in);
         boolean arTesti = true;
         do {
@@ -60,6 +62,9 @@ public class Main {
                     break;
                 case 5:
                     aparatas.saveStatus();
+                    break;
+                case 6:
+                    aparatas.selectDataSource();
                     break;
             }
 

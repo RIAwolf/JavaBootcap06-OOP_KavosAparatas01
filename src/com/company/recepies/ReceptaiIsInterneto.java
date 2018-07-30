@@ -1,5 +1,6 @@
 package com.company.recepies;
 
+import com.company.interfaces.IReceptai;
 import com.company.puodeliai.Produktai;
 
 import java.io.FileNotFoundException;
@@ -12,45 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Receptai {
-    private static Receptai instance = null;
-    public static Receptai getInstance(){
-        if(instance == null){
-            instance = new Receptai("http://www.riawolf.com/dev/receptai.txt");
-        }
-        return instance;
-    }
+public class ReceptaiIsInterneto implements IReceptai {
 
     private HashMap<String, Produktai> receptuZodynas;
 
-    private Receptai(){
-        receptuZodynas = new HashMap<String, Produktai>();
-        FileReader reader = null;
-        try {
-            reader = new FileReader("receptai.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        Scanner sc = new Scanner(reader);
-
-        while (sc.hasNext()){
-            float water = sc.nextFloat();
-            float sugar = sc.nextFloat();
-            float beans = sc.nextFloat();
-            String name = sc.next();
-            Produktai pr = new Produktai(water,sugar,beans);
-            receptuZodynas.put(name,pr);
-        }
-
-        sc.close();
-        try {
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Receptai(String path){
+    public ReceptaiIsInterneto(String path){
         receptuZodynas = new HashMap<String, Produktai>();
         URL url=null;
         InputStream stream=null;
